@@ -134,7 +134,7 @@ const Login = ({ onLogin }) => {
 
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-700">
           <p className="font-semibold mb-2">Demo Credentials:</p>
-          <p>Admin: admin@hostel.com / admin123</p>
+          <p>Admin: smart.hostel.system@gmail.com / admin123</p>
           <p>(First create admin using setup endpoint)</p>
         </div>
       </div>

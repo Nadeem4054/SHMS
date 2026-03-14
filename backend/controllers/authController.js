@@ -56,22 +56,70 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check for user email
+    console.log('🔍 Login Attempt:', { email, passwordLength: password?.length });
+
+    // Input validation
+    if (!email || !password) {
+      console.log('❌ Missing email or password');
+      return res.status(400).json({ 
+        message: 'Email and password are required',
+        debug: 'MISSING_INPUTS'
+      });
+    }
+
+    // Find user by email
+    console.log('🔍 Searching for user with email:', email);
     const user = await User.findOne({ email });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        token: generateToken(user._id)
+    if (!user) {
+      console.log('❌ User not found with email:', email);
+      return res.status(401).json({ 
+        message: 'Login failed. Please try again.',
+        debug: 'USER_NOT_FOUND'
       });
-    } else {
-      res.status(401).json({ message: 'Invalid credentials' });
     }
+
+    console.log('✅ User found:', { 
+      id: user._id, 
+      name: user.name, 
+      email: user.email, 
+      role: user.role 
+    });
+
+    // Compare password
+    console.log('🔍 Comparing passwords...');
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+    if (!isPasswordValid) {
+      console.log('❌ Password comparison failed');
+      return res.status(401).json({ 
+        message: 'Login failed. Please try again.',
+        debug: 'INVALID_PASSWORD'
+      });
+    }
+
+    console.log('✅ Password comparison successful');
+
+    // Generate token
+    const token = generateToken(user._id);
+
+    console.log('✅ Login successful for:', email);
+    
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token
+    });
+
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('💥 Login error:', error);
+    res.status(500).json({ 
+      message: 'Server error during login',
+      debug: 'SERVER_ERROR',
+      error: error.message 
+    });
   }
 };
 
