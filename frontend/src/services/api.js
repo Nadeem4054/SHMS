@@ -70,4 +70,12 @@ export const noticeService = {
   toggleNotice: (id) => api.patch(`/notices/${id}/toggle`)
 };
 
+// Complaint Services
+export const complaintService = {
+  submitComplaint: (data) => api.post('/complaints', data),
+  getMyComplaints: () => api.get('/complaints/my'),
+  getAllComplaints: (status) => api.get(`/admin/complaints${status ? `?status=${status}` : ''}`),
+  updateComplaintStatus: (id, data) => api.put(`/admin/complaints/${id}`, data)
+};
+
 export default api;

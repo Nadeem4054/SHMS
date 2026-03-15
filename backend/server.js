@@ -37,6 +37,8 @@ app.use('/api', require('./routes/applicationRoutes'));
 app.use('/api', require('./routes/roomRoutes'));
 app.use('/api', require('./routes/studentRoutes'));
 app.use('/api/notices', require('./routes/noticeRoutes'));
+const complaintRoutes = require('./routes/complaintRoutes');
+app.use('/api', complaintRoutes);
 
 // Default route
 app.get('/', (req, res) => {

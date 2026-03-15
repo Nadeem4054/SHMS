@@ -5,7 +5,8 @@ import {
   FaUser, 
   FaSignOutAlt,
   FaBars,
-  FaBullhorn
+  FaBullhorn,
+  FaExclamationTriangle
 } from 'react-icons/fa';
 import { useState } from 'react';
 
@@ -22,6 +23,7 @@ const StudentLayout = ({ onLogout }) => {
   const menuItems = [
     { path: '/student', label: 'Dashboard', icon: FaTachometerAlt },
     { path: '/student/notices', label: 'Notice Board', icon: FaBullhorn },
+    { path: '/student/complaints', label: 'Complaints', icon: FaExclamationTriangle },
     { path: '/student/my-room', label: 'My Room', icon: FaBed },
     { path: '/student/profile', label: 'Profile', icon: FaUser },
   ];
