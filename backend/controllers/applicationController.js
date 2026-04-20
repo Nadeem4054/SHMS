@@ -3,6 +3,7 @@ const StudentApplication = require('../models/StudentApplication');
 const User = require('../models/User');
 const Room = require('../models/Room');
 const { sendApprovalEmail } = require('../config/emailService');
+const { createNotification } = require('./notificationController');
 
 // @desc    Submit student application
 // @route   POST /api/apply
@@ -54,6 +55,23 @@ const submitApplication = async (req, res) => {
       roomId: null,
       photo: req.file ? `/uploads/students/${req.file.filename}` : null
     });
+
+    // Create notification for admin
+    try {
+      const adminUser = await User.findOne({ role: 'admin' });
+      if (adminUser) {
+        await createNotification(
+          adminUser._id,
+          'admin',
+          'New Application Submitted',
+          `${name} has submitted a new hostel application`,
+          'application',
+          application._id
+        );
+      }
+    } catch (notificationError) {
+      console.error('Error creating notification:', notificationError);
+    }
 
     res.status(201).json({
       message: 'Application submitted successfully',
@@ -114,6 +132,10 @@ const approveApplication = async (req, res) => {
       role: 'student'
     });
 
+    // Update application with studentId reference
+    application.studentId = user._id;
+    await application.save();
+
     // Update application status and room
     application.status = 'approved';
     application.roomId = roomId;
@@ -144,6 +166,20 @@ const approveApplication = async (req, res) => {
     }
     console.log('==========================================\n');
 
+    // Create notification for student
+    try {
+      await createNotification(
+        user._id,
+        'student',
+        'Application Approved!',
+        `Your hostel application has been approved. You have been assigned room ${room.roomNumber}`,
+        'approval',
+        application._id
+      );
+    } catch (notificationError) {
+      console.error('Error creating notification:', notificationError);
+    }
+
     res.json({
       message: 'Application approved successfully. Email notification sent.',
       application,
@@ -171,6 +207,24 @@ const rejectApplication = async (req, res) => {
 
     application.status = 'rejected';
     await application.save();
+
+    // Create notification for student about rejection
+    try {
+      // Find if user account exists for this student
+      const studentUser = await User.findOne({ email: application.email });
+      if (studentUser) {
+        await createNotification(
+          studentUser._id,
+          'student',
+          'Application Status Update',
+          'Your hostel application has been rejected',
+          'rejection',
+          application._id
+        );
+      }
+    } catch (notificationError) {
+      console.error('Error creating notification:', notificationError);
+    }
 
     res.json({
       message: 'Application rejected successfully',

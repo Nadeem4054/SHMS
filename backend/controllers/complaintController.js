@@ -1,5 +1,6 @@
 const Complaint = require('../models/Complaint');
 const User = require('../models/User');
+const { createNotification } = require('./notificationController');
 
 // @desc    Submit new complaint
 // @route   POST /api/complaints
@@ -23,6 +24,23 @@ const submitComplaint = async (req, res) => {
       description,
       category
     });
+
+    // Create notification for admin
+    try {
+      const adminUser = await User.findOne({ role: 'admin' });
+      if (adminUser) {
+        await createNotification(
+          adminUser._id,
+          'admin',
+          'New Complaint Submitted',
+          `${student.name} submitted a complaint: ${title}`,
+          'complaint',
+          complaint._id
+        );
+      }
+    } catch (notificationError) {
+      console.error('Error creating notification:', notificationError);
+    }
 
     res.status(201).json({
       message: 'Complaint submitted successfully',

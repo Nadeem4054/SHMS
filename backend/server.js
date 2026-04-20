@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
@@ -10,6 +12,34 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const server = http.createServer(app);
+
+// Socket.io setup
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
+
+// Make io globally available
+global.io = io;
+
+// Socket.io connection handling
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+
+  // Join user to their personal room (userId)
+  socket.on('joinRoom', (userId) => {
+    socket.join(userId);
+    console.log(`User ${userId} joined their room`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
 
 // CORS configuration - allow all localhost ports
 app.use(cors({
@@ -39,6 +69,7 @@ app.use('/api', require('./routes/studentRoutes'));
 app.use('/api/notices', require('./routes/noticeRoutes'));
 const complaintRoutes = require('./routes/complaintRoutes');
 app.use('/api', complaintRoutes);
+app.use('/api/notifications', require('./routes/notificationRoutes'));
 
 // Default route
 app.get('/', (req, res) => {
@@ -51,8 +82,14 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
+// Log all requests for debugging
+app.use((req, res, next) => {
+  console.log(`📝 ${req.method} ${req.path} - ${new Date().toISOString()}`);
+  next();
+});
+
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

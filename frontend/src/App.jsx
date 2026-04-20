@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { AuthProvider } from './contexts/AuthContext';
 
 // Layouts
 import MainLayout from './layouts/MainLayout';
@@ -65,50 +66,52 @@ function App() {
   };
 
   return (
-    <Router>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<MainLayout user={user} onLogout={handleLogout} />}>
-          <Route index element={<Landing />} />
-          <Route path="login" element={<Login onLogin={handleLogin} />} />
-          <Route path="apply" element={<Apply />} />
-        </Route>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<MainLayout user={user} onLogout={handleLogout} />}>
+            <Route index element={<Landing />} />
+            <Route path="login" element={<Login onLogin={handleLogin} />} />
+            <Route path="apply" element={<Apply />} />
+          </Route>
 
-        {/* Admin Routes */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRoles={['admin']}>
-              <AdminLayout onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<AdminDashboard />} />
-          <Route path="applications" element={<StudentApplications />} />
-          <Route path="students" element={<Students />} />
-          <Route path="rooms" element={<Rooms />} />
-          <Route path="notices" element={<NoticeBoard />} />
-          <Route path="complaints" element={<ComplaintsAdmin />} />
-          <Route path="approved-students" element={<ApprovedStudents />} />
-        </Route>
+          {/* Admin Routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminLayout onLogout={handleLogout} />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route path="applications" element={<StudentApplications />} />
+            <Route path="students" element={<Students />} />
+            <Route path="rooms" element={<Rooms />} />
+            <Route path="notices" element={<NoticeBoard />} />
+            <Route path="complaints" element={<ComplaintsAdmin />} />
+            <Route path="approved-students" element={<ApprovedStudents />} />
+          </Route>
 
-        {/* Student Routes */}
-        <Route
-          path="/student"
-          element={
-            <ProtectedRoute allowedRoles={['student']}>
-              <StudentLayout onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<StudentDashboard />} />
-          <Route path="notices" element={<NoticeBoardStudent />} />
-          <Route path="complaints" element={<ComplaintsStudent />} />
-          <Route path="my-room" element={<MyRoom />} />
-          <Route path="profile" element={<Profile />} />
-        </Route>
-      </Routes>
-    </Router>
+          {/* Student Routes */}
+          <Route
+            path="/student"
+            element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <StudentLayout onLogout={handleLogout} />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<StudentDashboard />} />
+            <Route path="notices" element={<NoticeBoardStudent />} />
+            <Route path="complaints" element={<ComplaintsStudent />} />
+            <Route path="my-room" element={<MyRoom />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

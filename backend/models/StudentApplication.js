@@ -11,6 +11,11 @@ const studentApplicationSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  studentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
   password: {
     type: String,
     required: true

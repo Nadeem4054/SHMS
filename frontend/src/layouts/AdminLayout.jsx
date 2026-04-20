@@ -11,6 +11,7 @@ import {
   FaExclamationTriangle
 } from 'react-icons/fa';
 import { useState } from 'react';
+import NotificationBell from '../components/NotificationBell';
 
 const AdminLayout = ({ onLogout }) => {
   const location = useLocation();
@@ -93,8 +94,9 @@ const AdminLayout = ({ onLogout }) => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="bg-white shadow-sm px-6 py-4">
+        <header className="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+          <NotificationBell />
         </header>
         
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">

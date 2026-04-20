@@ -1,4 +1,6 @@
 const Notice = require('../models/Notice');
+const User = require('../models/User');
+const { createNotification } = require('./notificationController');
 
 // @desc    Create a new notice (Admin only)
 // @route   POST /api/notices
@@ -20,6 +22,24 @@ const createNotice = async (req, res) => {
 
     const savedNotice = await notice.save();
     await savedNotice.populate('createdBy', 'name email');
+
+    // Create notifications for all students
+    try {
+      const students = await User.find({ role: 'student' });
+      const notificationPromises = students.map(student => 
+        createNotification(
+          student._id,
+          'student',
+          'New Notice Posted',
+          `${title}: ${content.substring(0, 100)}${content.length > 100 ? '...' : ''}`,
+          'notice',
+          savedNotice._id
+        )
+      );
+      await Promise.all(notificationPromises);
+    } catch (notificationError) {
+      console.error('Error creating notifications:', notificationError);
+    }
 
     res.status(201).json(savedNotice);
   } catch (error) {
