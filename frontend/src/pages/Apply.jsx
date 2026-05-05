@@ -14,7 +14,8 @@ import {
   FaBuilding,
   FaCamera,
   FaTimes,
-  FaUserCircle
+  FaUserCircle,
+  FaCheckCircle
 } from 'react-icons/fa';
 import { applicationService } from '../services/api';
 
@@ -126,21 +127,19 @@ const Apply = () => {
   if (success) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 dark:from-dark-bg dark:to-dark-surface flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-        <div className="max-w-md w-full bg-white dark:bg-dark-card p-8 rounded-2xl shadow-xl text-center transition-colors duration-300">
+        <div className="max-w-md w-full bg-white dark:bg-dark-surface p-8 rounded-2xl shadow-xl text-center transition-colors duration-300">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
+            <FaCheckCircle className="text-green-600 text-4xl" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-dark-text mb-4 transition-colors duration-300">Application Submitted!</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-6 transition-colors duration-300">
-            Your application has been submitted successfully. You will be redirected to the login page shortly.
+          <p className="text-gray-600 dark:text-dark-text-secondary mb-8 transition-colors duration-300">
+            Your application has been submitted successfully. We will review it and get back to you soon.
           </p>
-          <Link 
-            to="/login" 
-            className="inline-block px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
+          <Link
+            to="/"
+            className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
           >
-            Go to Login
+            Back to Home
           </Link>
         </div>
       </div>
@@ -149,7 +148,7 @@ const Apply = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 dark:from-dark-bg dark:to-dark-surface py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-dark-card rounded-2xl shadow-xl overflow-hidden transition-colors duration-300">
+      <div className="max-w-4xl mx-auto bg-white dark:bg-dark-surface rounded-2xl shadow-xl overflow-hidden transition-colors duration-300">
         {/* Header */}
         <div className="bg-primary-600 px-8 py-6">
           <div className="flex items-center space-x-3">

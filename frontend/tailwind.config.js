@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
       colors: {
@@ -18,6 +19,17 @@ export default {
           700: '#1d4ed8',
           800: '#1e40af',
           900: '#1e3a8a',
+        },
+        // Custom dark mode colors
+        dark: {
+          bg: '#0f172a',      // Very dark navy - main background
+          surface: '#1e293b',  // Dark surface for cards
+          secondary: '#334155', // Secondary backgrounds
+          text: '#f1f5f9',     // Light text color
+          'text-secondary': '#94a3b8', // Secondary text color
+          border: '#334155',   // Border color
+          accent: '#3b82f6',   // Accent color for dark mode
+          hover: '#374151',    // Hover state
         }
       }
     },
