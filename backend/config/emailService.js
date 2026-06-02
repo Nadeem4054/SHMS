@@ -140,6 +140,66 @@ const sendApprovalEmail = async (studentEmail, studentName, roomNumber) => {
   }
 };
 
+// Send leave approval email to guardian
+const sendLeaveApprovalEmail = async (guardianEmail, studentName, leaveType, fromDate, toDate, destination, guardianName, roomNumber) => {
+  console.log('\n📧 === SENDING LEAVE APPROVAL EMAIL ===');
+  console.log('To:', guardianEmail);
+  console.log('Student Name:', studentName);
+  
+  try {
+    const transporter = createTransporter();
+    await transporter.verify();
+
+    const formattedFromDate = new Date(fromDate).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
+    const formattedToDate = new Date(toDate).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
+
+    const emailContent = {
+      from: `"Smart Hostel" <${process.env.EMAIL_USER}>`,
+      to: guardianEmail,
+      subject: `🏫 Hostel Leave Approval Notice | Student: ${studentName}`,
+      html: `
+        <div style="font-family: 'Courier New', Courier, monospace; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.5;">
+          <p>Dear Mr./Mrs. ${guardianName},</p>
+          
+          <p>I hope this email finds you in good health.</p>
+          
+          <p><strong>LEAVE REQUEST DETAILS:</strong><br>
+          -------------------------<br>
+          Student Name : ${studentName}<br>
+          Room Number  : ${roomNumber}<br>
+          Leave Type   : ${leaveType}<br>
+          Destination  : ${destination}<br>
+          From Date    : ${formattedFromDate}<br>
+          To Date      : ${formattedToDate}</p>
+          
+          <p><strong>IMPORTANT NOTICE:</strong><br>
+          -------------------------<br>
+          1. The student must return to the hostel by the specified 'To Date' and time.<br>
+          2. Any late return without prior notice may lead to disciplinary action or fine.<br>
+          3. In case of any emergency, please contact the Hostel Warden immediately.</p>
+          
+          <p>Best Regards,</p>
+          
+          <p>Hostel Warden,<br>
+          Smart Hostel Management System (SHMS)<br>
+          Contact: +1 (555) 123-4567<br>
+          Email: nk4054420@gmail.com</p>
+          
+          <p style="border-top: 1px solid #ccc; padding-top: 10px; font-size: 12px; color: #777;">
+          This is an auto-generated email. Please do not reply.</p>
+        </div>
+      `
+    };
+
+    const info = await transporter.sendMail(emailContent);
+    return { success: true, messageId: info.messageId };
+
+  } catch (error) {
+    console.error('❌ LEAVE EMAIL ERROR:', error.message);
+    throw error;
+  }
+};
+
 // Test email configuration
 const testEmailConfig = async () => {
   try {
@@ -155,5 +215,6 @@ const testEmailConfig = async () => {
 
 module.exports = {
   sendApprovalEmail,
+  sendLeaveApprovalEmail,
   testEmailConfig
 };

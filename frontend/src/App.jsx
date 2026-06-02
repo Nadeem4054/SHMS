@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import AIChatWidget from './components/AIChatWidget';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Layouts
 import MainLayout from './layouts/MainLayout';
@@ -26,6 +28,7 @@ import Students from './pages/admin/Students';
 import NoticeBoard from './pages/admin/NoticeBoard';
 import ComplaintsAdmin from './pages/admin/Complaints';
 import RoomChangeRequests from './pages/admin/RoomChangeRequests';
+import AdminLeaveRequests from './pages/admin/LeaveRequests';
 
 // Student Pages
 import StudentDashboard from './pages/student/StudentDashboard';
@@ -34,6 +37,7 @@ import Profile from './pages/student/Profile';
 import NoticeBoardStudent from './pages/student/NoticeBoard';
 import ComplaintsStudent from './pages/student/Complaints';
 import RoomChange from './pages/student/RoomChange';
+import LeaveRequest from './pages/student/LeaveRequest';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -94,6 +98,7 @@ function App() {
               <Route path="complaints" element={<ComplaintsAdmin />} />
               <Route path="approved-students" element={<ApprovedStudents />} />
               <Route path="room-change-requests" element={<RoomChangeRequests />} />
+              <Route path="leave-requests" element={<AdminLeaveRequests />} />
             </Route>
 
             {/* Student Routes */}
@@ -111,6 +116,7 @@ function App() {
               <Route path="my-room" element={<MyRoom />} />
               <Route path="profile" element={<Profile />} />
               <Route path="room-change" element={<RoomChange />} />
+              <Route path="leave" element={<LeaveRequest />} />
             </Route>
 
             {/* Public Routes - MUST come after admin routes */}
@@ -124,6 +130,7 @@ function App() {
             </Route>
           </Routes>
           <AIChatWidget />
+          <ToastContainer position="top-right" autoClose={3000} />
         </Router>
       </AuthProvider>
     </ThemeProvider>

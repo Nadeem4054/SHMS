@@ -83,7 +83,7 @@ const Contact = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 dark:text-dark-text transition-colors duration-300">Email</h3>
                       <p className="text-gray-600 dark:text-dark-text-secondary transition-colors duration-300">
-                        info@smarthostel.com
+                        smart.hostel.system@gmail.com
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">
                         We respond within 24 hours
@@ -98,7 +98,7 @@ const Contact = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 dark:text-dark-text transition-colors duration-300">Phone</h3>
                       <p className="text-gray-600 dark:text-dark-text-secondary transition-colors duration-300">
-                        +91 98765 43210
+                        +92 331 9696536
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">
                         Mon-Fri: 9AM-6PM
@@ -113,10 +113,10 @@ const Contact = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 dark:text-dark-text transition-colors duration-300">Address</h3>
                       <p className="text-gray-600 dark:text-dark-text-secondary transition-colors duration-300">
-                        123 Hostel Street, Campus Area
+                        University Road jarma, Kohat
                       </p>
                       <p className="text-gray-600 dark:text-dark-text-secondary transition-colors duration-300">
-                        University City, State 123456
+                        KPK, Pakistan
                       </p>
                     </div>
                   </div>
@@ -142,18 +142,19 @@ const Contact = () => {
               </div>
 
               {/* Google Maps */}
-              <div className="bg-white dark:bg-dark-surface p-8 rounded-xl shadow-lg overflow-hidden transition-colors duration-300">
+              <div className="bg-white dark:bg-dark-surface p-8 rounded-xl shadow-lg transition-colors duration-300">
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-dark-text mb-6 transition-colors duration-300">Find Us</h2>
-                <div className="relative h-64 rounded-lg overflow-hidden">
+                <div className="rounded-xl overflow-hidden shadow-inner">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3333.89762695!2d77.2090212!3d38.907192!2m3!1f0x0:0x0xffffffff!2m3!1m3!2m2!1senIN!5e0!3m2!1senIN!4v1714758649!5m2!1senIN"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3326.157769189486!2d71.4433167752048!3d33.52328347336071!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d8ec241a467237%3A0xf7409abf0918f110!2sKohat%20University%20of%20Science%20and%20Technology.!5e0!3m2!1sen!2s!4v1780375172985!5m2!1sen!2s"
                     width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
+                    height="400"
+                    style={{ border: 0, borderRadius: '12px' }}
                     allowFullScreen=""
                     loading="lazy"
-                    className="rounded-lg"
-                    title="Smart Hostel Location"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full"
+                    title="Smart Hostel @ Kohat University"
                   />
                 </div>
               </div>

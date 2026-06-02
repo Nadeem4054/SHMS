@@ -102,4 +102,13 @@ export const chatService = {
   clearHistory: () => api.delete('/chat/clear'),
 };
 
+// Leave Request Services
+export const leaveService = {
+  submitLeaveRequest: (data) => api.post('/student/leave', data),
+  getMyLeaveRequests: () => api.get('/student/my-leaves'),
+  getAllLeaveRequests: (status) => api.get(`/admin/leave-requests${status ? `?status=${status}` : ''}`),
+  approveLeaveRequest: (id, adminRemarks) => api.put(`/admin/leave-approve/${id}`, { adminRemarks }),
+  rejectLeaveRequest: (id, adminRemarks) => api.put(`/admin/leave-reject/${id}`, { adminRemarks })
+};
+
 export default api;

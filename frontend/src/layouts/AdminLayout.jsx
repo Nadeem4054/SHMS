@@ -9,7 +9,8 @@ import {
   FaUserGraduate,
   FaBullhorn,
   FaExclamationTriangle,
-  FaExchangeAlt
+  FaExchangeAlt,
+  FaPlaneDeparture
 } from 'react-icons/fa';
 import { useState } from 'react';
 import NotificationBell from '../components/NotificationBell';
@@ -33,6 +34,7 @@ const AdminLayout = ({ onLogout }) => {
     { path: '/admin/notices', label: 'Notice Board', icon: FaBullhorn },
     { path: '/admin/complaints', label: 'Complaints', icon: FaExclamationTriangle },
     { path: '/admin/room-change-requests', label: 'Room Change Requests', icon: FaExchangeAlt },
+    { path: '/admin/leave-requests', label: 'Leave Requests', icon: FaPlaneDeparture },
     { path: '/admin/approved-students', label: 'Approved Students', icon: FaCheckCircle },
   ];
 

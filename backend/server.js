@@ -72,6 +72,7 @@ app.use('/api', complaintRoutes);
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api', require('./routes/roomChangeRoutes'));
 app.use('/api/chat', require('./routes/chatRoutes'));
+app.use('/api', require('./routes/leaveRequestRoutes'));
 
 // Default route
 app.get('/', (req, res) => {
